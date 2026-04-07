@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Product.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTestsSuite (Apr 7, 2026 6:27:52 PM)</a> &gt; <a href="../../index.html" class="el_group">Junit5_HW</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">main.najah.code</a> &gt; <span class="el_source">Product.java</span></div><h1>Product.java</h1><pre class="source lang-java linenums">package main.najah.code;
+
+public class Product {
+    private String name;
+    private double price;
+<span class="fc" id="L6">    private double discount = 0;</span>
+
+<span class="fc" id="L8">    public Product(String name, double price) {</span>
+<span class="fc bfc" id="L9" title="All 2 branches covered.">        if (price &lt; 0) throw new IllegalArgumentException(&quot;Price must be non-negative&quot;);</span>
+<span class="fc" id="L10">        this.name = name;</span>
+<span class="fc" id="L11">        this.price = price;</span>
+<span class="fc" id="L12">    }</span>
+
+    public void applyDiscount(double discountPercentage) {
+<span class="fc bfc" id="L15" title="All 4 branches covered.">        if (discountPercentage &lt; 0 || discountPercentage &gt; 50) {</span>
+<span class="fc" id="L16">            throw new IllegalArgumentException(&quot;Invalid discount&quot;);</span>
+        }
+<span class="fc" id="L18">        this.discount = discountPercentage;</span>
+<span class="fc" id="L19">    }</span>
+
+    public double getFinalPrice() {
+<span class="fc" id="L22">        return price * (1 - discount / 100);</span>
+    }
+
+<span class="fc" id="L25">    public String getName() { return name; }</span>
+<span class="fc" id="L26">    public double getPrice() { return price; }</span>
+<span class="fc" id="L27">    public double getDiscount() { return discount; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span>AllTestsSuite (Apr 7, 2026 6:27:52 PM)</div></body></html>
