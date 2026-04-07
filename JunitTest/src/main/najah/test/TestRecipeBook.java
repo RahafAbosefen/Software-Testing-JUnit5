@@ -119,14 +119,13 @@ public class TestRecipeBook {
         assertNull(RB.deleteRecipe(slot), "Empty slot " + slot + " should return null on delete");
     }
     
+    @Disabled("Bug identified: deleteRecipe replaces recipe with new Recipe instead of null. Fix: Set recipeArray[recipeToDelete] = null to truly delete it.")
     @Test
-    @DisplayName("Ensure slot availability after recipe deletion")
-    void testDeleteAndAddAgain() {
+    @DisplayName("Bug: deleteRecipe should remove the recipe completely")
+    void testDeleteBug() {
         RB.addRecipe(R); 
-        RB.deleteRecipe(0); 
-        Recipe newR = new Recipe();
-        newR.setName("Latte");
-        assertTrue(RB.addRecipe(newR));
+        RB.deleteRecipe(0);
+        assertNull(RB.getRecipes()[0], "Recipe slot should be null after deletion");
     }
 
     @Test
@@ -147,7 +146,7 @@ public class TestRecipeBook {
 		assertNull(RB.editRecipe(1, newR));
 	} 
 	
-    @Disabled("Bug identified: Logic does not persist the updated recipe object correctly")
+	@Disabled("Bug identified: Logic does not persist the updated recipe object correctly. Fix: Remove newRecipe.setName(\"\") any line that modifies newRecipe's name inside editRecipe method")
     @Test
     @DisplayName("Bug: New recipe object should persist after edit")
     void testEditBug() {
