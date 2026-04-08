@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TestRecipeBook.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTestsSuite (Apr 7, 2026 6:27:52 PM)</a> &gt; <a href="../../index.html" class="el_group">Junit5_HW</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">main.najah.test</a> &gt; <span class="el_source">TestRecipeBook.java</span></div><h1>TestRecipeBook.java</h1><pre class="source lang-java linenums">package main.najah.test;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TestRecipeBook.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTestsSuite (Apr 8, 2026 2:35:49 PM)</a> &gt; <a href="../../index.html" class="el_group">Junit5_HW</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">main.najah.test</a> &gt; <span class="el_source">TestRecipeBook.java</span></div><h1>TestRecipeBook.java</h1><pre class="source lang-java linenums">package main.najah.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -119,15 +119,15 @@ import main.najah.code.RecipeException;
 <span class="fc" id="L119">        assertNull(RB.deleteRecipe(slot), &quot;Empty slot &quot; + slot + &quot; should return null on delete&quot;);</span>
 <span class="fc" id="L120">    }</span>
     
+    @Disabled(&quot;Bug identified: deleteRecipe replaces recipe with new Recipe instead of null. Fix: Set recipeArray[recipeToDelete] = null to truly delete it.&quot;)
     @Test
-    @DisplayName(&quot;Ensure slot availability after recipe deletion&quot;)
-    void testDeleteAndAddAgain() {
-<span class="fc" id="L125">        RB.addRecipe(R); </span>
-<span class="fc" id="L126">        RB.deleteRecipe(0); </span>
-<span class="fc" id="L127">        Recipe newR = new Recipe();</span>
-<span class="fc" id="L128">        newR.setName(&quot;Latte&quot;);</span>
-<span class="fc" id="L129">        assertTrue(RB.addRecipe(newR));</span>
-<span class="fc" id="L130">    }</span>
+    @DisplayName(&quot;Bug: deleteRecipe should remove the recipe completely&quot;)
+    void testDeleteBug() {
+<span class="nc" id="L126">        RB.addRecipe(R); </span>
+<span class="nc" id="L127">        RB.deleteRecipe(0);</span>
+<span class="nc" id="L128">        assertNull(RB.getRecipes()[0], &quot;Recipe slot should be null after deletion&quot;);</span>
+<span class="nc" id="L129">    }</span>
+
 
     @Test
     @DisplayName(&quot;Verify edit operation returns original name&quot;)
@@ -147,28 +147,29 @@ import main.najah.code.RecipeException;
 <span class="fc" id="L147">		assertNull(RB.editRecipe(1, newR));</span>
 <span class="fc" id="L148">	} </span>
 	
-    @Disabled(&quot;Bug identified: Logic does not persist the updated recipe object correctly&quot;)
-    @Test
-    @DisplayName(&quot;Bug: New recipe object should persist after edit&quot;)
-    void testEditBug() {
-<span class="nc" id="L154">        RB.addRecipe(R);</span>
-<span class="nc" id="L155">        Recipe newR = new Recipe();</span>
-<span class="nc" id="L156">        newR.setName(&quot;Latte&quot;);</span>
-<span class="nc" id="L157">        RB.editRecipe(0, newR);</span>
-<span class="nc" id="L158">        assertEquals(&quot;Latte&quot;, RB.getRecipes()[0].getName());</span>
-<span class="nc" id="L159">    }</span>
+	
+	@Disabled(&quot;Bug identified: Logic does not persist the updated recipe object correctly. Fix: Remove newRecipe.setName(\&quot;\&quot;) any line that modifies newRecipe's name inside editRecipe method&quot;)
+	@Test
+	@DisplayName(&quot;Bug: New recipe object should persist after edit&quot;)
+	void testEditBug() {
+<span class="nc" id="L155">	    RB.addRecipe(R);</span>
+<span class="nc" id="L156">	    Recipe newR = new Recipe();</span>
+<span class="nc" id="L157">	    newR.setName(&quot;Latte&quot;);</span>
+<span class="nc" id="L158">	    RB.editRecipe(0, newR);</span>
+<span class="nc" id="L159">	    assertEquals(&quot;Latte&quot;, RB.getRecipes()[0].getName());</span>
+<span class="nc" id="L160">	}</span>
 
     @AfterEach
     void tearDown() {
-<span class="fc" id="L163">    	R=null;</span>
-<span class="fc" id="L164">        RB = null;</span>
-<span class="fc" id="L165">        System.out.println(&quot;RecipeBook Clean up complete.&quot;);</span>
-<span class="fc" id="L166">    }</span>
+<span class="fc" id="L164">    	R=null;</span>
+<span class="fc" id="L165">        RB = null;</span>
+<span class="fc" id="L166">        System.out.println(&quot;RecipeBook Clean up complete.&quot;);</span>
+<span class="fc" id="L167">    }</span>
     
     
     @AfterAll
     static void tearDownAll() {
-<span class="fc" id="L171">    System.out.println(&quot;--- All Tests RecipeBook Completed Successfully ---&quot;);</span>
-<span class="fc" id="L172">    }</span>
+<span class="fc" id="L172">    System.out.println(&quot;--- All Tests RecipeBook Completed Successfully ---&quot;);</span>
+<span class="fc" id="L173">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span>AllTestsSuite (Apr 7, 2026 6:27:52 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span>AllTestsSuite (Apr 8, 2026 2:35:49 PM)</div></body></html>
