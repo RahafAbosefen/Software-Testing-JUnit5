@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CalculatorTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTestsSuite (Apr 8, 2026 6:08:40 PM)</a> &gt; <a href="../../index.html" class="el_group">Junit5_HW</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">main.najah.test</a> &gt; <span class="el_source">CalculatorTest.java</span></div><h1>CalculatorTest.java</h1><pre class="source lang-java linenums">package main.najah.test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.concurrent.TimeUnit;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import main.najah.code.Calculator;
+
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@DisplayName(&quot;Calculator Tests&quot;)
+<span class="fc" id="L25">public class CalculatorTest {</span>
+
+  Calculator calc;
+  
+  @BeforeAll
+  static void initAll() {
+<span class="fc" id="L31">      System.out.println(&quot;--- Calculator test started ---&quot;);</span>
+<span class="fc" id="L32">  }</span>
+
+
+	@BeforeEach
+	void setUp() throws Exception {
+<span class="fc" id="L37">		calc= new Calculator();</span>
+<span class="fc" id="L38">		System.out.println(&quot;Setup: Calculator ready for next operation.&quot;);</span>
+<span class="fc" id="L39">	}</span>
+
+	@Test
+	@Order(3)
+	@DisplayName(&quot;Addition with valid numbers&quot;)
+	void testAddValid() {
+<span class="fc" id="L45">	    assertEquals(12,calc.add(5,3,4));</span>
+<span class="fc" id="L46">	}</span>
+	
+	@Test
+	@Order(8)
+	@Disabled(&quot;This test fails intentionally. Fix by changing expected result to 4&quot;)
+	@DisplayName(&quot;Intentional failing test&quot;)
+	void testFailingExample() {
+<span class="nc" id="L53">	    assertEquals(5, calc.add(2, 2)); </span>
+<span class="nc" id="L54">	}</span>
+
+	@ParameterizedTest
+	@CsvSource({
+	    &quot;1,1,2&quot;,
+	    &quot;-1,1,0&quot;,
+	    &quot;0,1,1&quot;,
+	    &quot;2,1,3&quot;
+	})
+	@Order(6)
+	@DisplayName(&quot;Addition with multiple inputs&quot;)
+	@Timeout(value = 50, unit = TimeUnit.MILLISECONDS)
+	void testAdd(int x, int y, int result) {
+<span class="fc" id="L67">	    assertEquals(result, calc.add(x, y));</span>
+<span class="fc" id="L68">	}</span>
+	
+	@Test
+	@Order(5)
+	@DisplayName(&quot;Division with valid numbers&quot;)
+	void testDivideValid() {
+<span class="fc" id="L74">	    assertEquals(2, calc.divide(6,3));</span>
+<span class="fc" id="L75">	}</span>
+	
+	@Test
+	@Order(2)
+	@DisplayName(&quot;Division with invalid numbers&quot;)
+	void testDivisionByZero() {
+<span class="pc" id="L81">	    assertThrows(ArithmeticException.class, () -&gt; calc.divide(5, 0));</span>
+<span class="fc" id="L82">	}</span>
+	
+	@Test
+	@Order(4)
+	@DisplayName(&quot;Factorial of zero&quot;)
+	void testFactorialZero() {
+<span class="fc" id="L88">		assertEquals(1, calc.factorial(0));	</span>
+<span class="fc" id="L89">		 }</span>
+	
+
+	@Test
+	@Order(7)
+	@DisplayName(&quot;Factorial with negative number&quot;)
+	void testFactorialNegative() {
+<span class="pc" id="L96">		assertThrows(IllegalArgumentException.class,()-&gt;calc.factorial(-1));</span>
+<span class="fc" id="L97">	}</span>
+	
+	
+	@Test
+	@Order(1)
+	@DisplayName(&quot;Factorial with positive number&quot;)
+	@Timeout(value = 50, unit = TimeUnit.MILLISECONDS)
+	void testFactorialPositive() {
+<span class="fc" id="L105">	    assertEquals(6, calc.factorial(3));</span>
+<span class="fc" id="L106">	}</span>
+	
+
+    @AfterEach
+    void tearDown() {
+<span class="fc" id="L111">        System.out.println(&quot;Cleanup: Calculator Operation finished.&quot;);</span>
+<span class="fc" id="L112">    }</span>
+
+    @AfterAll
+    static void tearDownAll() {
+<span class="fc" id="L116">        System.out.println(&quot;--- Calculator all tests finished ---&quot;);</span>
+<span class="fc" id="L117">    }</span>
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span>AllTestsSuite (Apr 8, 2026 6:08:40 PM)</div></body></html>
