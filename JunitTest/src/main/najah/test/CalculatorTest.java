@@ -8,6 +8,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -42,6 +43,14 @@ public class CalculatorTest {
 	@DisplayName("Addition with valid numbers")
 	void testAddValid() {
 	    assertEquals(12,calc.add(5,3,4));
+	}
+	
+	@Test
+	@Order(8)
+	@Disabled("This test fails intentionally. Fix by changing expected result to 4")
+	@DisplayName("Intentional failing test")
+	void testFailingExample() {
+	    assertEquals(5, calc.add(2, 2)); 
 	}
 
 	@ParameterizedTest
