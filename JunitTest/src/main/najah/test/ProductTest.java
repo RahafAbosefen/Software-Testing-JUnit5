@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
@@ -19,8 +20,13 @@ public class ProductTest {
 	void setUp() throws Exception {
 		p = new Product("Ahmad",40);
 	}
-
-
+	
+	@Disabled
+	@Test
+	void test() {
+		fail("Not yet implemented");
+	}
+    
 	@Test
 	@DisplayName("Verify product name initialization")
 	void ValidApplyName() {
